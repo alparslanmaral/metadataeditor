@@ -48,7 +48,7 @@ function downloadBlob(blob, filename) {
 function ensureWorker() {
   if (worker) return;
 
-  worker = new Worker("./ffmpeg-worker.js");
+  worker = new Worker(new URL("./ffmpeg-worker.js", window.location.href));
   worker.onmessage = (e) => {
     const msg = e.data;
 

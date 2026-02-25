@@ -1,8 +1,8 @@
-// ffmpeg-worker.js
+// ffmpeg-worker.js (LOCAL VENDOR)
 
-// jsDelivr (daha stabil olabiliyor)
-importScripts("https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js");
-importScripts("https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js");
+// UMD dosyalarını repo içinden yükle
+importScripts("./vendor/ffmpeg/ffmpeg.js");
+importScripts("./vendor/ffmpeg/util.js");
 
 const { FFmpeg } = FFmpegWASM;
 const { fetchFile } = FFmpegUtil;
@@ -51,7 +51,13 @@ self.onmessage = async (e) => {
         ffmpeg.on("log", ({ message }) => post("LOG", { message }));
 
         post("LOG", { message: "Worker: ffmpeg.load() başlıyor..." });
-        await ffmpeg.load();
+
+        // ŞİMDİLİK böyle kalsın. Aşağıda core'u da lokalleştireceğiz.
+        await ffmpeg.load({
+          coreURL: "./vendor/ffmpeg/core/ffmpeg-core.js",
+          wasmURL: "./vendor/ffmpeg/core/ffmpeg-core.wasm",
+        });
+
         loaded = true;
         post("LOG", { message: "Worker: ffmpeg.load() tamam" });
       }
