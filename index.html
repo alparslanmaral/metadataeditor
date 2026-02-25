@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video Metadata Düzenleyici</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Video Metadata Düzenleyici</h1>
+      <p>Dosyayı sürükleyip bırakın veya seçin. Alanları düzenleyin. Tarayıcıda işlenip indirilecektir.</p>
+    </header>
+
+    <section class="card">
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Dosya yükleme alanı">
+        <div class="dropzone__inner">
+          <strong>Buraya sürükleyip bırakın</strong>
+          <span>veya</span>
+          <label class="btn">
+            Göz at
+            <input id="fileInput" type="file" accept="video/*,.mp4,.m4a,.avi,.mov,.mkv,.webm" hidden />
+          </label>
+          <small id="fileHint">Not: İşlem tarayıcıda yapılır; büyük dosyalarda uzun sürebilir.</small>
+        </div>
+      </div>
+
+      <div id="fileInfo" class="fileinfo hidden"></div>
+
+      <div class="preview hidden" id="previewWrap">
+        <video id="videoPreview" controls></video>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Metadata</h2>
+
+      <form id="metaForm" class="form">
+        <div class="grid">
+          <label>
+            <span>Başlık (title)</span>
+            <input name="title" type="text" />
+          </label>
+
+          <label>
+            <span>Sanatçı (artist)</span>
+            <input name="artist" type="text" />
+          </label>
+
+          <label>
+            <span>Albüm (album)</span>
+            <input name="album" type="text" />
+          </label>
+
+          <label>
+            <span>Tür (genre)</span>
+            <input name="genre" type="text" />
+          </label>
+
+          <label>
+            <span>Tarih (date)</span>
+            <input name="date" type="text" placeholder="2026-02-25 veya 2026" />
+          </label>
+
+          <label>
+            <span>Dil (language)</span>
+            <input name="language" type="text" placeholder="tr / tur / Turkish" />
+          </label>
+
+          <label>
+            <span>Yayıncı (publisher)</span>
+            <input name="publisher" type="text" />
+          </label>
+
+          <label>
+            <span>Telif Hakkı (copyright)</span>
+            <input name="copyright" type="text" />
+          </label>
+
+          <label>
+            <span>Kodlayan (encoded_by)</span>
+            <input name="encoded_by" type="text" />
+          </label>
+
+          <label class="full">
+            <span>Yorumlar (comment)</span>
+            <textarea name="comment" rows="4"></textarea>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="writeBtn" class="btn primary" type="submit" disabled>Metadata Yaz & İndir</button>
+          <button id="resetBtn" class="btn" type="button" disabled>Sıfırla</button>
+        </div>
+
+        <p class="note" id="status"></p>
+        <div id="progressWrap" class="hidden" style="margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; gap:10px; color:#9ca3af; font-size:12px;">
+            <span>İşlem durumu</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div style="height:10px; border:1px solid #243244; border-radius:999px; overflow:hidden; margin-top:6px;">
+            <div id="progressBar" style="height:100%; width:0%; background:rgba(34,197,94,.65);"></div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <small>
+        ffmpeg.wasm ilk kullanımda indirildiği için ilk işlem biraz uzun sürebilir.
+      </small>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
